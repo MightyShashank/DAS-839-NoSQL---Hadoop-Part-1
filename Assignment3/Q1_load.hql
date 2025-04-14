@@ -12,19 +12,16 @@ SELECT
   email_id,
   member_id,
 
-  -- Fix for attended
   CASE
     WHEN num_classes_attended IS NULL OR NOT num_classes_attended RLIKE '^[0-9]+$' THEN -1
     ELSE CAST(num_classes_attended AS INT)
   END,
 
-  -- Fix for absent
   CASE
     WHEN num_classes_absent IS NULL OR NOT num_classes_absent RLIKE '^[0-9]+$' THEN -1
     ELSE CAST(num_classes_absent AS INT)
   END,
 
-  -- Fix for percent with trailing '%'
   CASE
     WHEN avg_attendance_percent IS NULL OR NOT regexp_replace(avg_attendance_percent, '%', '') RLIKE '^[0-9]*\\.?[0-9]+$'
     THEN -1.0
